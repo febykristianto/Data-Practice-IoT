@@ -1,2 +1,0 @@
-# Esteh-Manis
-Bismillah

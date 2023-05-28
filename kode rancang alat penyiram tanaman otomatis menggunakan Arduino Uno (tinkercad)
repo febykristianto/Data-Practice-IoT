@@ -1,0 +1,63 @@
+#include <LiquidCrystal.h>
+int sensorPin = A0;
+int relayPin = 5;
+int buzzer = 6;
+int ledPin = 4;
+
+//Buat objek LCD
+LiquidCrystal lcd(12,11,10,9,8,7);
+
+void setup() {
+  //Tentukan ukuran LCD
+  lcd.begin(16, 2);
+  pinMode(sensorPin, INPUT);
+  pinMode(relayPin, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+  lcd.setCursor(1,0);
+  lcd.print("Alat Penyiram");
+  lcd.setCursor(1,1);
+  lcd.print("TanamanOtomatis");
+  delay(1000);
+  lcd.clear();
+}
+
+void loop() {
+  int value = analogRead(sensorPin);
+  if(value <= 150){
+    digitalWrite(relayPin, HIGH);//nyalakan pompa
+    tone(buzzer, 200);//buzzer nya 900 tone
+    digitalWrite(ledPin, LOW);
+    lcd.setCursor(1,0);
+    lcd.print("Kelembapan: ");
+    lcd.println(value);
+    lcd.setCursor(1,1);
+    lcd.print("Tanah Kering :(");
+    delay(500);
+    lcd.clear();
+    lcd.setCursor(1,0);
+    lcd.println("Pompa ON");
+    lcd.setCursor(1,1);
+    lcd.print("Thanks :)");
+    delay(100);
+    menampilkan 
+  } else {
+    digitalWrite(relayPin, LOW);
+    noTone(buzzer);
+    digitalWrite(ledPin, HIGH);
+    lcd.setCursor(1,0);
+    lcd.print("Kelembapan: ");
+    lcd.println(value);
+    lcd.setCursor(1,1);
+    lcd.print("Tanah Basah :)");
+    delay(500);
+    lcd.clear();
+    lcd.setCursor(1,0);
+    lcd.println("Pompa OFF");
+    lcd.setCursor(1,1);
+    lcd.print("Good :)");
+    delay(100);
+    
+  }
+}
